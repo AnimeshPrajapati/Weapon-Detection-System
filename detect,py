@@ -1,0 +1,21 @@
+from ultralytics import YOLO
+import os
+
+# Load the model once
+model = YOLO("yolov8/best.pt")  # Make sure this path is correct
+
+def detect_weapon(image_path):
+    # Perform detection
+    results = model(image_path)
+    
+    # Get class names from model
+    names = model.names
+    
+    # Extract predicted classes
+    labels = [names[int(cls)] for cls in results[0].boxes.cls]
+
+    # Save result image
+    result_path = image_path.replace("uploads", "results")
+    results[0].save(filename=result_path)
+
+    return result_path, list(set(labels))  # Return image and unique class labels
