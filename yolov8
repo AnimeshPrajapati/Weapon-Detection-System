@@ -1,0 +1,12 @@
+yolo task=detect mode=train model=yolov8n.pt data=dataset.yaml epochs=50 imgsz=640
+from ultralytics import YOLO
+model = YOLO('yolov8n.pt')  # Default pretrained weights
+import gdown
+import os
+from ultralytics import YOLO
+
+# Download once if not exists
+if not os.path.exists("yolov8/best.pt"):
+    gdown.download("https://drive.google.com/uc?id=YOUR_FILE_ID", "yolov8/best.pt", quiet=False)
+
+model = YOLO("yolov8/best.pt")
